@@ -7,6 +7,7 @@ import {getStorage,ref,uploadBytesResumable,getDownloadURL} from 'firebase/stora
 import {useDispatch} from 'react-redux';
 import app from '../../firebasestore';
 import { addProduct } from "../../redux/apiCalls";
+import axios from 'axios';
 
 export default function NewProduct() {
 
@@ -16,6 +17,10 @@ export default function NewProduct() {
 
   const [file, setFile] = useState(null);
 
+  const [file2, setFile2] = useState(null);
+
+  const [video, setVideo] = useState('');
+  const [image, setImage] = useState('');
   const [cat, setCat] = useState([]);
 
   const [color, setColor] = useState([]);
@@ -25,6 +30,8 @@ export default function NewProduct() {
   const [percentage, setpercentage] = useState(0);
 
   const dispatch = useDispatch();
+
+  const [uploading, setUploading] = useState("uploading is 0%");
 
 
   
@@ -37,7 +44,7 @@ const handleChange = (e) => {
   })
 }
 
-console.log(inputs);
+
 
 const handleCat = (e) => {
 
@@ -55,17 +62,57 @@ const handleSize = (e) => {
 }
 
 
-const handleClick =(e) => {
+const handleUpload = async(e) => {
+
 
   e.preventDefault();
 
-  const filename = new Date().getTime() + file.name;
+  const data = new FormData();
+
+  data.append("file",file);
+  data.append("upload_preset", "uploads");
+
+
+  setUploading("uploading");
+
+  try {
+
+
+    const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/dap91fhxh/image/upload",data);
+
+    const {url} = uploadRes.data;
+
+    setImage(url);
+
+    setUploading("uploaded 100%");
+    
+  } catch (error) {
+
+
+    console.log(error);
+
+
+    setUploading("uploading failed");
+    
+  }
+
+
+
+}
+
+
+
+const handleUploadVideo =(e) => {
+
+  e.preventDefault();
+
+  const filename = new Date().getTime() + file2.name;
 
   const storage = getStorage(app);
 
   const StorageRef = ref(storage, filename);
 
-  const uploadTask = uploadBytesResumable(StorageRef,file);
+  const uploadTask = uploadBytesResumable(StorageRef,file2);
 
   
 
@@ -98,14 +145,28 @@ const handleClick =(e) => {
     // Handle successful uploads on complete
     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      const product = {...inputs, img:downloadURL,categories: cat, color:color, size: size};
+      
 
 
-      addProduct(product,dispatch);
+      setVideo(downloadURL);
     });
   }
 );
 
+}
+
+const handleClick = (e) => {
+
+
+  const product = {...inputs, video: video, img:image,categories: cat, color:color, size: size};
+
+  e.preventDefault();
+
+  addProduct(product,dispatch);
+
+
+  window.location.reload();
+  
 }
 
 
@@ -118,14 +179,16 @@ const handleClick =(e) => {
           <label>Image</label>
           <input type="file" id="file" onChange={(e) => setFile(e.target.files[0])}/>
 
-          <h3 style={{color:'green'}}>{`File upload is ${percentage} %`}</h3>
+          <button onClick={handleUpload}>upload</button>
+
+          <h4 style={{color:'green'}}>{uploading}</h4>
         </div>
 
         <div className="addProductItem">
           <label>Video</label>
-          <input type="file" id="file" />
-
-          <h3 style={{color:'teal'}}>{`File upload is ${percentage} %`}</h3>
+          <input type="file" id="file" onChange={(e) => setFile2(e.target.files[0])}/>
+          <button onClick={handleUploadVideo}>upload</button>
+          <h4 style={{color:'teal'}}>{`File upload is ${percentage} %`}</h4>
         </div>
         <div className="addProductItem">
           <label>Title </label>
@@ -145,6 +208,21 @@ const handleClick =(e) => {
         <div className="addProductItem">
           <label>discountedPrice </label>
           <input name ="discountedPrice" type="number" placeholder="discounted price" onChange={handleChange}/>
+        </div>
+
+        <div className="addProductItem">
+          <label>wholesaleSeller </label>
+          <input name ="wholesaleSeller" type="text" placeholder="wholesale Seller name" onChange={handleChange}/>
+        </div>
+
+        <div className="addProductItem">
+          <label>wholesalePrice </label>
+          <input name ="wholesalePrice" type="number" placeholder="wholesale price" onChange={handleChange}/>
+        </div>
+
+        <div className="addProductItem">
+          <label>wholesaleMinimumQuantity </label>
+          <input name ="wholesaleMinimumQuantity" type="number" placeholder="wholesale minimum quantity" onChange={handleChange}/>
         </div>
 
 

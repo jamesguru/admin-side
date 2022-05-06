@@ -15,7 +15,7 @@ const NewSlider = () => {
 
         const [file,setFile] = useState(null);
 
-        const [percentage,setpercentage] = useState(0);
+        const [uploading,setUploading] = useState('uploading is 0%');
 
 
 
@@ -46,77 +46,50 @@ const NewSlider = () => {
         }
 
 
-        const handleUpload = (e) => {
 
-            e.preventDefault();
+        const handleUpload = async(e) => {
 
 
-            const filename = new Date().getTime() + file.name;
-      
-            const storage = getStorage(app);
-          
-            const StorageRef = ref(storage, filename);
-          
-            const uploadTask = uploadBytesResumable(StorageRef,file);
+          e.preventDefault();
+        
+          const data = new FormData();
+        
+          data.append("file",file);
+          data.append("upload_preset", "uploads");
+        
+        
+          setUploading("uploading");
+        
+          try {
+        
+        
+            const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/dap91fhxh/image/upload",data);
+        
+            const {url} = uploadRes.data;
+        
+           
     
+            const newSlider = {"img":url,"title":title,"desc":desc};
+    
+            uploadSlider(newSlider)
+        
+            setUploading("uploaded 100%");
             
-          
+          } catch (error) {
+        
+        
+            console.log(error);
+        
+        
+            setUploading("uploading failed");
             
-          
-          
-            uploadTask.on('state_changed', 
-            (snapshot) => {
-              // Observe state change events such as progress, pause, and resume
-              // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          
-              setpercentage(progress);
-              console.log('Upload is ' + percentage + '% done');
-              switch (snapshot.state) {
-                case 'paused':
-                  console.log('Upload is paused');
-                  break;
-                case 'running':
-                  console.log('Upload is running');
-                  break;
-          
-                default:
-          
-                  break;
-              }
-            }, 
-            (error) => {
-              // Handle unsuccessful uploads
-            }, 
-            () => {
-              // Handle successful uploads on complete
-              // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-    
-    
-               
-    
-    
-                const newSlider = {"img":downloadURL,"title":title,"desc":desc};
-    
-    
-                 title && desc &&  uploadSlider(newSlider);
-    
-    
-    
-                
-              });
-            }
-          );
-          
-          
-    
-    
-    
-    
-
-
+          }
+        
+        
+        
         }
+
+        
 
 
 
@@ -131,7 +104,7 @@ const NewSlider = () => {
 
 
                 <input type="file" className="input-title" onChange={(e) => setFile(e.target.files[0])}/>
-                <h4 style={{color:'green'}}>{`File upload is ${percentage} %`}</h4>
+                <h4 style={{color:'green'}}>{uploading}</h4>
 
                 <input type="text" className="input-title" placeholder="Write title" onChange={(e) => setTitle(e.target.value)}/>
 

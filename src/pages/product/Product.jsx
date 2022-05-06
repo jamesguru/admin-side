@@ -5,6 +5,7 @@ import {productData} from "../../dummyData"
 import { Publish } from "@material-ui/icons";
 import {useDispatch,useSelector} from 'react-redux';
 import { publicRequest } from "../../requestMethods";
+import axios from 'axios';
 import React from 'react';
 
 
@@ -28,14 +29,16 @@ export default function Product() {
         try {
 
 
-            const res = await publicRequest.put(`/products/${id}`,{inputs});
+            const res = await axios.put(`http://localhost:4444/api/products/${id}`,inputs);
+
+            console.log(inputs);
             
 
 
         } catch (error) {
 
 
-            throw error(error);
+            console.log("something went wrong");
             
         }
     }
@@ -96,10 +99,10 @@ export default function Product() {
                   <label>Product Description</label>
                   <input type="text" name = "desc" onChange={handleChange} placeholder={product.desc}/>
                   <label>Product Original Price</label>
-                  <input type="number" name = "originalPrice"  onChange={handleChange} placeholder={product.price}/>
+                  <input type="number" name = "originalPrice"  onChange={handleChange} placeholder={product.originalPrice}/>
 
                   <label>Product discounted Price</label>
-                  <input type="number" name = "discountedPrice"  onChange={handleChange} placeholder={product.price}/>
+                  <input type="number" name = "discountedPrice"  onChange={handleChange} placeholder={product.discountedPrice}/>
                   <label>In Stock</label>
                   <select name = "inStock" name="inStock" onChange={handleChange} id="idStock">
                       <option value="true">Yes</option>

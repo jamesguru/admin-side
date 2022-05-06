@@ -23,7 +23,7 @@ const NewGallery = () => {
     const [desc,setDesc] = useState('');
     const [percentage,setpercentage] = useState(0);
 
-    const [uploading, setUploading] = useState(false);
+    const [uploading, setUploading] = useState("start uploading");
 
     const uploadGallery = async (gallery) =>{
 
@@ -53,7 +53,7 @@ const NewGallery = () => {
       data.append("upload_preset", "uploads");
 
 
-      setUploading(false);
+      setUploading("uploading");
 
       try {
 
@@ -66,12 +66,15 @@ const NewGallery = () => {
 
         console.log(url);
 
-        setUploading(true);
+        setUploading("uploaded 100%");
         
       } catch (error) {
 
 
         console.log(error);
+
+
+        setUploading("uploading failed");
         
       }
 
@@ -172,7 +175,7 @@ const NewGallery = () => {
 
                 <input type="file"  onChange ={(e) => setFile2(e.target.files[0])}/>
 
-               { uploading  ?   <h4 style={{color:'green'}}>{`File upload is 100%`}</h4> :  <h4 style={{color:'green'}}>{`File upload is 0%`}</h4> }
+                <button onClick={handleUpload2}>{uploading}</button>
 
                 <input className="input-title" type="text" placeholder="how to use serum" onChange={(e) => setTitle(e.target.value)}/>
 
@@ -182,7 +185,7 @@ const NewGallery = () => {
 
                 <button onClick={handleUpload} className="upload-button">Upload</button>
 
-                <button onClick={handleUpload2} className="upload-button">Upload2</button>
+                
 
 
 

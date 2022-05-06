@@ -19,7 +19,7 @@ const Promo = () => {
 
     const [desc, setDesc] = useState('');
 
-    const [percentage,setpercentage] = useState(0);
+    const [uploading,setUploading] = useState("uploading is 0%");
 
 
     useEffect(() =>{
@@ -79,6 +79,51 @@ const Promo = () => {
     }
 
 
+
+    const handleUpload = async(e) => {
+
+
+      e.preventDefault();
+    
+      const data = new FormData();
+    
+      data.append("file",file);
+      data.append("upload_preset", "uploads");
+    
+    
+      setUploading("uploading");
+    
+      try {
+    
+    
+        const uploadRes = await axios.post("https://api.cloudinary.com/v1_1/dap91fhxh/image/upload",data);
+    
+        const {url} = uploadRes.data;
+    
+       
+
+        const newPromo = {"title" : title, "desc" : desc, "image":url};
+
+        uploadPromo(newPromo)
+    
+        setUploading("uploaded 100%");
+        
+      } catch (error) {
+    
+    
+        console.log(error);
+    
+    
+        setUploading("uploading failed");
+        
+      }
+    
+    
+    
+    }
+    
+
+
     const uploadPromo = async (newPromo) =>{
 
 
@@ -86,6 +131,9 @@ const Promo = () => {
 
 
             await axios.post('http://localhost:4444/api/promotion/',newPromo);
+
+
+            window.location.reload();
             
         } catch (error) {
 
@@ -93,82 +141,12 @@ const Promo = () => {
             console.log('something went wrong');
             
         }
-    }
-
-
-    const handleUpload = (e) =>{
-
-
-        e.preventDefault();
-
-        const filename = new Date().getTime() + file.name;
-      
-        const storage = getStorage(app);
-      
-        const StorageRef = ref(storage, filename);
-      
-        const uploadTask = uploadBytesResumable(StorageRef,file);
-
-        console.log(filename);
-
-        console.log(title);
-        console.log(desc);
-      
-        
-      
-      
-        uploadTask.on('state_changed', 
-        (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      
-          setpercentage(progress);
-          console.log('Upload is ' + percentage + '% done');
-          switch (snapshot.state) {
-            case 'paused':
-              console.log('Upload is paused');
-              break;
-            case 'running':
-              console.log('Upload is running');
-              break;
-      
-            default:
-      
-              break;
-          }
-        }, 
-        (error) => {
-          // Handle unsuccessful uploads
-        }, 
-        () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-
-
-            console.log(downloadURL);
-
-
-            const newPromo = {"title" : title, "desc" : desc, "image":downloadURL};
-
-
-            
-
-
-            uploadPromo(newPromo);
-
-
-
-            
-          });
-        }
-      );
-      
-      
 
 
     }
+
+
+    
 
 
 
@@ -216,7 +194,7 @@ const Promo = () => {
 
                  <input type="file"  onChange ={(e) => setFile(e.target.files[0])}/>
 
-                 <h4 style={{color:'green'}}>{`File upload is ${percentage} %`}</h4>
+             <h4 style={{color:'green'}}>{uploading}</h4>
 
 
                  <input className="title-input" type="text" onChange={(e) => setTitle(e.target.value.split(","))} placeholder="write the promo title"/>

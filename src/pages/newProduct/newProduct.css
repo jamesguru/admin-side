@@ -39,3 +39,17 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+
+button{
+
+  background-color: teal;
+
+  border: none;
+
+  padding: 5px;
+
+  color: white;
+
+  margin: 5px;
+}
