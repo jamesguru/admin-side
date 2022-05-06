@@ -37,6 +37,7 @@ const handleChange = (e) => {
   })
 }
 
+console.log(inputs);
 
 const handleCat = (e) => {
 
@@ -137,9 +138,15 @@ const handleClick =(e) => {
         </div>
 
         <div className="addProductItem">
-          <label>Price </label>
-          <input name ="price" type="number" placeholder="price" onChange={handleChange}/>
+          <label>originalPrice </label>
+          <input name ="originalPrice" type="number" placeholder="original price" onChange={handleChange}/>
         </div>
+
+        <div className="addProductItem">
+          <label>discountedPrice </label>
+          <input name ="discountedPrice" type="number" placeholder="discounted price" onChange={handleChange}/>
+        </div>
+
 
         <div className="addProductItem">
           <label>Brand </label>

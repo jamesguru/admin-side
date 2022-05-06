@@ -54,7 +54,7 @@ export const deleteProduct = async(id, dispatch) => {
 
     try {
 
-        //const res = await publicRequest.delete(`/products/${id}`);
+        const res = await publicRequest.delete(`/products/${id}`);
 
         
 

@@ -29,7 +29,10 @@ export default function ProductList() {
 
 
   const handleDelete = (id) => {
+
+
     deleteProduct(id,dispatch);
+    
   };
 
   const columns = [

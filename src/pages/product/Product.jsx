@@ -4,6 +4,8 @@ import Chart from "../../components/chart/Chart"
 import {productData} from "../../dummyData"
 import { Publish } from "@material-ui/icons";
 import {useDispatch,useSelector} from 'react-redux';
+import { publicRequest } from "../../requestMethods";
+import React from 'react';
 
 
 export default function Product() {
@@ -14,6 +16,42 @@ export default function Product() {
     const productId = location.pathname.split("/")[2];
 
     const product = useSelector((state) => state.product.products.find((product) => product._id === productId));
+
+    const [inputs,setInputs] = React.useState({});
+
+   
+
+
+    const handleUpdate = async (id) => {
+
+
+        try {
+
+
+            const res = await publicRequest.put(`/products/${id}`,{inputs});
+            
+
+
+        } catch (error) {
+
+
+            throw error(error);
+            
+        }
+    }
+
+
+    const handleChange = (e) => {
+
+        setInputs(prev => {
+      
+      
+          return {...prev, [e.target.name] : e.target.value}
+        })
+      }
+
+
+      console.log(inputs);
 
 
   return (
@@ -54,21 +92,20 @@ export default function Product() {
           <form className="productForm">
               <div className="productFormLeft">
                   <label>Product Name</label>
-                  <input type="text" placeholder={product.title}/>
+                  <input type="text" name = "title" onChange={handleChange} placeholder={product.title}/>
                   <label>Product Description</label>
-                  <input type="text" placeholder={product.desc}/>
-                  <label>Product Price</label>
-                  <input type="text" placeholder={product.price}/>
+                  <input type="text" name = "desc" onChange={handleChange} placeholder={product.desc}/>
+                  <label>Product Original Price</label>
+                  <input type="number" name = "originalPrice"  onChange={handleChange} placeholder={product.price}/>
+
+                  <label>Product discounted Price</label>
+                  <input type="number" name = "discountedPrice"  onChange={handleChange} placeholder={product.price}/>
                   <label>In Stock</label>
-                  <select name="inStock" id="idStock">
+                  <select name = "inStock" name="inStock" onChange={handleChange} id="idStock">
                       <option value="true">Yes</option>
                       <option value="false">No</option>
                   </select>
-                  <label>Active</label>
-                  <select name="active" id="active">
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                  </select>
+                  
               </div>
               <div className="productFormRight">
                   <div className="productUpload">
@@ -78,7 +115,7 @@ export default function Product() {
                       </label>
                       <input type="file" id="file" style={{display:"none"}} />
                   </div>
-                  <button className="productButton">Update</button>
+                  <button className="productButton" onClick={() => handleUpdate(productId)}>Update</button>
               </div>
           </form>
       </div>
