@@ -4,6 +4,7 @@ import app from '../../firebasestore';
 
 import './newSlider.css';
 import axios from 'axios';
+import { publicRequest } from '../../requestMethods';
 
 const NewSlider = () => {
 
@@ -27,7 +28,7 @@ const NewSlider = () => {
             try {
 
 
-                await axios.post('http://localhost:4444/api/slider/', slider);
+                await publicRequest.post('/slider/', slider);
 
 
                 window.location.reload();

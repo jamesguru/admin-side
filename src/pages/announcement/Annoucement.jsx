@@ -5,6 +5,7 @@ import './annoucement.css';
 import axios from 'axios';
 
 import {useEffect} from 'react';
+import { publicRequest } from '../../requestMethods';
 
 const Annoucement = () => {
 
@@ -25,7 +26,7 @@ const Annoucement = () => {
 
             
 
-            await axios.post('http://localhost:4444/api/annoucement/', {title});
+            await publicRequest.post('/annoucement/', {title});
 
 
             
@@ -50,7 +51,7 @@ const Annoucement = () => {
 
             console.log(id);
 
-            await axios.delete(`http://localhost:4444/api/annoucement/${id}`)
+            await publicRequest.delete(`/annoucement/${id}`)
             
         } catch (error) {
 
@@ -72,7 +73,7 @@ const Annoucement = () => {
             try {
 
 
-                const res = await axios.get('http://localhost:4444/api/annoucement/');
+                const res = await publicRequest.get('/annoucement/');
 
 
 

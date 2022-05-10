@@ -7,6 +7,7 @@ import axios from 'axios';
 import {useEffect,useState} from 'react';
 
 import {format} from 'timeago.js';
+import { publicRequest } from '../../requestMethods';
 
 
 
@@ -30,7 +31,7 @@ const Orders = () => {
         try {
 
 
-            const res = await axios.get('http://localhost:4444/api/orders/');
+            const res = await publicRequest.get('/orders/');
 
 
             setOrders(res.data);
@@ -57,7 +58,7 @@ const Orders = () => {
 
         try {
 
-            await axios.delete(`http://localhost:4444/api/orders/${id}`);
+            await publicRequest.delete(`/orders/${id}`);
 
             window.location.reload()
             
@@ -79,7 +80,7 @@ const Orders = () => {
 
     try {
 
-        await axios.put(`http://localhost:4444/api/orders/${id}`,{status: status + 1});
+        await publicRequest.put(`/orders/${id}`,{status: status + 1});
 
         window.location.reload();
         

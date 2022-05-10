@@ -29,7 +29,7 @@ export default function Product() {
         try {
 
 
-            const res = await axios.put(`http://localhost:4444/api/products/${id}`,inputs);
+            const res = await publicRequest.put(`/products/${id}`,inputs);
 
             console.log(inputs);
             

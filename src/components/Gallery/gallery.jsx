@@ -7,6 +7,7 @@ import axios from 'axios';
 import {useEffect,useState} from 'react';
 
 import {Link} from 'react-router-dom';
+import { publicRequest } from '../../requestMethods';
 
 
 
@@ -33,7 +34,7 @@ useEffect(() =>{
         try {
 
 
-            const res = await axios.get('http://localhost:4444/api/gallery');
+            const res = await publicRequest.get('/gallery');
 
 
 
@@ -68,7 +69,7 @@ const handleDelete = async (id) =>{
     try {
 
 
-        await axios.delete(`http://localhost:4444/api/gallery/${id}`);
+        await publicRequest.delete(`/gallery/${id}`);
 
         window.location.reload();
         

@@ -2,6 +2,7 @@ import {React,useState,useEffect} from 'react';
 import './slider.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { publicRequest } from '../../requestMethods';
 
 
 
@@ -28,7 +29,7 @@ const Slider = () => {
 
 
 
-                            const res = await axios.get('http://localhost:4444/api/slider/');
+                            const res = await publicRequest.get('/slider/');
 
 
                             setSlider(res.data);
@@ -61,7 +62,7 @@ const Slider = () => {
                 try {
 
 
-                    await axios.delete(`http://localhost:4444/api/slider/${id}`);
+                    await publicRequest.delete(`/slider/${id}`);
 
 
                     window.location.reload();

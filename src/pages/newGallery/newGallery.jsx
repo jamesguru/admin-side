@@ -6,6 +6,7 @@ import {getStorage,ref,uploadBytesResumable,getDownloadURL} from 'firebase/stora
 import app from '../../firebasestore';
 
 import axios from 'axios';
+import { publicRequest } from '../../requestMethods';
 
 
 
@@ -31,7 +32,7 @@ const NewGallery = () => {
         try {
 
 
-            await axios.post('http://localhost:4444/api/gallery/',gallery);
+            await publicRequest.post('/gallery/',gallery);
             
         } catch (error) {
 
