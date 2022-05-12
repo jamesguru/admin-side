@@ -7,6 +7,7 @@ import app from '../../firebasestore';
 
 
 import {useEffect,useState} from 'react';
+import { publicRequest } from '../../requestMethods';
 
 const Promo = () => {
 
@@ -36,7 +37,7 @@ const Promo = () => {
             try {
 
 
-                const res = await axios.get('http://localhost:4444/api/promotion/');
+                const res = await publicRequest.get('/promotion/');
 
                 setPromo(res.data);
                 
@@ -62,7 +63,7 @@ const Promo = () => {
         try {
 
 
-            await axios.delete(`http://localhost:4444/api/promotion/${id}`);
+            await publicRequest.delete(`promotion/${id}`);
 
             console.log('deleted successfully');
 
