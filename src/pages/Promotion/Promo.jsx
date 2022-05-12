@@ -37,7 +37,7 @@ const Promo = () => {
             try {
 
 
-                const res = await publicRequest.get('/promotion/');
+                const res = await publicRequest.get('promotion/');
 
                 setPromo(res.data);
                 
@@ -63,7 +63,7 @@ const Promo = () => {
         try {
 
 
-            await publicRequest.delete(`promotion/${id}`);
+            await publicRequest.delete(`/promotion/${id}`);
 
             console.log('deleted successfully');
 
@@ -131,7 +131,7 @@ const Promo = () => {
         try {
 
 
-            await axios.post('http://localhost:4444/api/promotion/',newPromo);
+            await publicRequest.post('/promotion/',newPromo);
 
 
             window.location.reload();
