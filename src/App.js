@@ -20,6 +20,7 @@ import Gallery from "./components/Gallery/gallery";
 import NewGallery from './pages/newGallery/newGallery';
 import Slider from './pages/slider/slider';
 import NewSlider from "./pages/newSlider/newSlider";
+import Categories from "./pages/Categories/category";
 
 
 
@@ -116,7 +117,10 @@ function App() {
           </Route>
 
 
-          
+          <Route path="/categories">
+            <Categories/>
+          </Route>
+
         
         
       </div>

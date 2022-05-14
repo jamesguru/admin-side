@@ -10,7 +10,7 @@ import {
   AttachMoney,
   BarChart,
 
-  
+  Category,
   MailOutline,
   DynamicFeed,
   ChatBubbleOutline,
@@ -47,6 +47,14 @@ export default function Sidebar() {
               <TrendingUp className="sidebarIcon" />
               Sales
             </li>
+
+            <Link to="/categories" className="link">
+            <li className="sidebarListItem">
+              <Category className="sidebarIcon" />
+              categories
+            </li>
+
+            </Link>
           </ul>
         </div>
         <div className="sidebarMenu">
@@ -135,10 +143,7 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Staff</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <WorkOutline className="sidebarIcon" />
-              Manage
-            </li>
+          
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
               Analytics
