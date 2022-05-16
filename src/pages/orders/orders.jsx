@@ -230,6 +230,10 @@ if(status === 0){
 
                             <td><strong>Product ID:</strong>{product._id}</td>
 
+                            <td><strong>Product quantity:</strong>{product.quantity}</td>
+
+                            <td><strong>Wholeseller:</strong>{product.wholesaleSeller && product.wholesaleSeller}</td>
+
                             
 
                             
