@@ -23,9 +23,9 @@ export default function NewProduct() {
   const [image, setImage] = useState('');
   const [cat, setCat] = useState([]);
 
-  const [color, setColor] = useState([]);
+  const [skintype, setSkinType] = useState([]);
 
-  const [size, setSize] = useState([]);
+  const [concern, setConcern] = useState([]);
 
   const [percentage, setpercentage] = useState(0);
 
@@ -51,14 +51,14 @@ const handleCat = (e) => {
   setCat(e.target.value.split(","));
 }
 
-const handleColor = (e) => {
+const handleConcern = (e) => {
 
-  setColor(e.target.value.split(","));
+  setConcern(e.target.value.split(","));
 }
 
-const handleSize = (e) => {
+const handleSkinType = (e) => {
 
-  setSize(e.target.value.split(","));
+  setSkinType(e.target.value.split(","));
 }
 
 
@@ -158,7 +158,7 @@ const handleUploadVideo =(e) => {
 const handleClick = (e) => {
 
 
-  const product = {...inputs, video: video, img:image,categories: cat, color:color, size: size};
+  const product = {...inputs, video: video, img:image,categories: cat, skintype:skintype, concern: concern};
 
   e.preventDefault();
 
@@ -238,12 +238,12 @@ const handleClick = (e) => {
 
         <div className="addProductItem">
           <label>Concern</label>
-          <input name ="concern" type="text" placeholder="Dandruff,whitening,small circles" onChange={handleColor}/>
+          <input name ="concern" type="text" placeholder="Dandruff,whitening,small circles" onChange={handleConcern}/>
         </div>
 
         <div className="addProductItem">
           <label>Skin type </label>
-          <input name ="skintype" type="text" placeholder="normal,dry,all" onChange={handleSize}/>
+          <input name ="skintype" type="text" placeholder="normal,dry,all" onChange={handleSkinType}/>
         </div>
 
 

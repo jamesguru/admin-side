@@ -34,7 +34,7 @@ useEffect(() =>{
         try {
 
 
-            const res = await publicRequest.get('/gallery');
+            const res = await publicRequest.get('/gallery/');
 
 
 

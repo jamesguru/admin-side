@@ -100,7 +100,7 @@ export const addProduct = async (product, dispatch) => {
 
     try {
 
-        const res = await publicRequest.post(`/products`, product);
+        const res = await publicRequest.post('/products/', product);
 
         
 
