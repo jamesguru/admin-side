@@ -10,7 +10,7 @@ const NewSlider = () => {
 
 
         const [title,setTitle] = useState('');
-
+        const [id,setID] = useState('');
         
         const [desc, setDesc] = useState('');
 
@@ -70,7 +70,7 @@ const NewSlider = () => {
         
            
     
-            const newSlider = {"img":url,"title":title,"desc":desc};
+            const newSlider = {"img":url,"title":title,"desc":desc, "id":id};
     
             uploadSlider(newSlider)
         
@@ -114,7 +114,7 @@ const NewSlider = () => {
 
                 <input type="text" className="input-desc"  placeholder="Write small description" onChange={(e) => setDesc(e.target.value)}/>
 
-                
+                <input type="text" className="input-desc"  placeholder="Write id for slider" onChange={(e) => setID(e.target.value)}/>
 
 
                 <button  onClick={handleUpload} className="button-upload">Upload</button>

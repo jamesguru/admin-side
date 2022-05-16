@@ -237,13 +237,13 @@ const handleClick = (e) => {
         </div>
 
         <div className="addProductItem">
-          <label>Color </label>
-          <input name ="color" type="text" placeholder="white,green,blue" onChange={handleColor}/>
+          <label>Concern</label>
+          <input name ="concern" type="text" placeholder="Dandruff,whitening,small circles" onChange={handleColor}/>
         </div>
 
         <div className="addProductItem">
-          <label>Size </label>
-          <input name ="size" type="text" placeholder="XL, S, M" onChange={handleSize}/>
+          <label>Skin type </label>
+          <input name ="skintype" type="text" placeholder="normal,dry,all" onChange={handleSize}/>
         </div>
 
 
