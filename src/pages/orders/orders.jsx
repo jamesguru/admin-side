@@ -155,7 +155,7 @@ if(status === 0){
 
                     <th>Status</th>
 
-                    <th>Product quantity</th>
+                    <th>Order quantity</th>
 
                     <th>Product Details</th>
 
@@ -231,6 +231,8 @@ if(status === 0){
                             <td><strong>Product ID:</strong>{product._id}</td>
 
                             <td><strong>Product quantity:</strong>{product.quantity}</td>
+                            <td><strong>Product concern:</strong>{product.concern}</td>
+                            <td><strong>Product skintype:</strong>{product.skintype}</td>
 
                             <td><strong>Wholeseller:</strong>{product.wholesaleSeller && product.wholesaleSeller}</td>
 

@@ -11,8 +11,6 @@ import { publicRequest } from '../../requestMethods';
 
 
 
-
-
 const NewGallery = () => {
 
 
